@@ -5,6 +5,7 @@ import 'package:fire_todo/core/constants/app_assets.dart';
 import 'package:fire_todo/core/injection/dp_injection.dart';
 import 'package:fire_todo/features/home/domain/usecase/task/get_tasks_by_category.dart';
 import 'package:fire_todo/features/home/presentation/bloc/category/category_bloc.dart';
+import 'package:fire_todo/features/home/presentation/bloc/tasks/task_bloc.dart';
 import 'package:fire_todo/shared/global/domain/entity/category_entity.dart';
 import 'package:fire_todo/shared/dialogs/add_category.dart';
 import 'package:fire_todo/shared/dialogs/confirm_delete_dialog.dart';
@@ -171,6 +172,7 @@ class CategoryScreen extends StatelessWidget with CategoryScreenMixin {
               Expanded(
                 child: BlocBuilder<CategoryBloc, CategoryState>(
                   builder: (context, state) {
+                    context.watch<TaskBloc>();
                     if (state is CategoryLoadingState) {
                       return const Center(
                         child: CircularProgressIndicator(

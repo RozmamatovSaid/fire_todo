@@ -38,6 +38,13 @@ class AppStrings {
   static const String add = 'add';
   static const String edit = 'edit';
   static const String deleteCategoryConfirm = 'delete_category_confirm';
+  static const String completedTask = 'completed_task';
+  static const String completedTasks = 'completed_tasks';
+  static const String pendingTasks = 'pending_tasks';
+  static const String thisWeek = 'this_week';
+  static const String thisMonth = 'this_month';
+  static const String thisYear = 'this_year';
+  static const String taskSuffix = 'task_suffix';
   static const String delete = 'delete';
   static const String cancel = 'cancel';
   static const String deleteCategoryTitle = 'delete_category_title';
