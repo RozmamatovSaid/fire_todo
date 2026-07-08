@@ -39,12 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
     selectedCategoryId = ValueNotifier<int?>(null);
     isAllTasksSelected = ValueNotifier<bool>(false);
     hasSetDefaultCategory = ValueNotifier<bool>(false);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    context.read<CategoryBloc>().add(const GetAllCategoriesEvent());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<CategoryBloc>().add(const GetAllCategoriesEvent());
+      }
+    });
   }
 
   @override
@@ -182,7 +181,13 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SizedBox(
             height: 50,
-            child: BlocBuilder<CategoryBloc, CategoryState>(
+            child: BlocConsumer<CategoryBloc, CategoryState>(
+              listenWhen: (previous, current) => current is CategoryLoadedState,
+              listener: (context, state) {
+                if (state is CategoryLoadedState) {
+                  _handleCategoryStateChange(state);
+                }
+              },
               builder: (context, state) {
                 final rowChildren = <Widget>[
                   DottedAddButton(
@@ -231,8 +236,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
 
                 rowChildren.add(const SizedBox(width: 8));
-
-                _handleCategoryStateChange(state);
 
                 if (state.categories.isNotEmpty) {
                   // ALL TASK BUTTON

@@ -18,6 +18,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
   int? _preSelectedCategoryId;
+  String _userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // SettingsCubit allaqachon global init() ni chaqirgan, shu holat'dan o'qiymiz
+    _userName = context.read<SettingsCubit>().state.username;
+  }
 
   // HomeScreendan selected category ID'ni olish uchun callback
   void _onCategoryChanged(int? categoryId) {
@@ -34,33 +42,34 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsCubit, SettingsState>(
-      builder: (context, settingsState) {
-        final userName = settingsState.username.isEmpty
-            ? 'User'
-            : settingsState.username;
-
-        return MainScaffoldWrapper(
-          selectedIndex: selectedIndex,
-          onTabChanged: (newIndex) => selectedIndex.value = newIndex,
-          preSelectedCategoryId: _preSelectedCategoryId,
-          body: ValueListenableBuilder<int>(
-            valueListenable: selectedIndex,
-            builder: (context, index, _) => IndexedStack(
-              index: index,
-              children: [
-                HomeScreen(
-                  name: userName,
-                  onSelectedCategoryChanged: _onCategoryChanged,
-                ),
-                const CalendarScreen(),
-                const CategoryScreen(),
-                const GraphScreen(),
-              ],
-            ),
-          ),
-        );
+    return BlocListener<SettingsCubit, SettingsState>(
+      // faqat username o'zgarganda react qiladi, isLoading'dan emas
+      listenWhen: (previous, current) => previous.username != current.username,
+      listener: (context, state) {
+        setState(() {
+          _userName = state.username;
+        });
       },
+      child: MainScaffoldWrapper(
+        selectedIndex: selectedIndex,
+        onTabChanged: (newIndex) => selectedIndex.value = newIndex,
+        preSelectedCategoryId: _preSelectedCategoryId,
+        body: ValueListenableBuilder<int>(
+          valueListenable: selectedIndex,
+          builder: (context, index, _) => IndexedStack(
+            index: index,
+            children: [
+              HomeScreen(
+                name: _userName.isEmpty ? 'User' : _userName,
+                onSelectedCategoryChanged: _onCategoryChanged,
+              ),
+              const CalendarScreen(),
+              const CategoryScreen(),
+              const GraphScreen(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
