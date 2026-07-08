@@ -9,6 +9,7 @@ abstract class CategoryLocalDataSource {
   Future<void> addCategory(String name);
   Future<void> deleteCategory(int id);
   Future<List<CategoryModel>> getAllCategories();
+  Future<void> updateCategory(CategoryModel category);
 }
 
 // impl
@@ -53,5 +54,11 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   Future<List<CategoryModel>> getAllCategories() async {
     final isar = await IsarService.getInstance();
     return await isar.categoryModels.where().findAll();
+  }
+
+  @override
+  Future<void> updateCategory(CategoryModel category) async {
+    final isar = await IsarService.getInstance();
+    await isar.writeTxn(() => isar.categoryModels.put(category));
   }
 }

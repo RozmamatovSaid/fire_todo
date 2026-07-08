@@ -19,6 +19,9 @@ class AppStrings {
   static const String home = 'home';
   static const String calendar = 'calendar';
   static const String category = 'category';
+  static const String categoriesDisplayOnHomepage = 'categories_display_on_homepage';
+  static const String manageCategories = 'manage_categories';
+  static const String createNewCategory = 'create_new_category';
   static const String graph = 'graph';
   static const String enterCategoryName = 'enter_category_name';
   static const String addNewCategory = 'add_new_category';
@@ -33,6 +36,7 @@ class AppStrings {
   static const String symbols = 'symbols';
   static const String flags = 'flags';
   static const String add = 'add';
+  static const String edit = 'edit';
   static const String deleteCategoryConfirm = 'delete_category_confirm';
   static const String delete = 'delete';
   static const String cancel = 'cancel';

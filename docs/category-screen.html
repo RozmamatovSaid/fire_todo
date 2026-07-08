@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Category Screen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B0B0B;
+    --card: #1A1A1A;
+    --text-primary: #FFFFFF;
+    --text-secondary: #8E8E93;
+    --dashed-border: #444444;
+    --amber: #E5A93C;
+    --drag-handle: #666666;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  body{
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    display:flex;
+    justify-content:center;
+    min-height:100vh;
+  }
+
+  .screen{
+    width:100%;
+    max-width:420px;
+    min-height:100vh;
+    background:var(--bg);
+    padding: 24px 16px 40px 16px;
+  }
+
+  /* ---------- Header ---------- */
+  .header-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .screen-title{
+    font-family:'Playfair Display', serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--text-primary);
+  }
+
+  .settings-btn{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid var(--dashed-border);
+    background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+
+  .settings-btn svg{
+    width:18px;
+    height:18px;
+    stroke:var(--text-primary);
+  }
+
+  .status-banner{
+    text-align:center;
+    color:var(--text-secondary);
+    font-size:13px;
+    padding:10px 8px;
+    margin-top:12px;
+  }
+
+  /* ---------- Section header ---------- */
+  .section-title{
+    font-size:18px;
+    font-weight:600;
+    color:var(--text-primary);
+    margin-top:24px;
+  }
+
+  /* ---------- Cards list ---------- */
+  .card-list{
+    margin-top:16px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .category-card{
+    background:var(--card);
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+  }
+
+  .drag-handle{
+    color:var(--drag-handle);
+    font-size:18px;
+    letter-spacing:2px;
+    line-height:1;
+    flex-shrink:0;
+    cursor:grab;
+    user-select:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:3px;
+    width:20px;
+  }
+
+  .drag-handle .dot-row{
+    display:flex;
+    gap:3px;
+  }
+
+  .drag-handle .dot{
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:var(--drag-handle);
+    display:block;
+  }
+
+  .card-info{
+    flex:1;
+    margin-left:14px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    min-width:0;
+  }
+
+  .card-title{
+    font-size:16px;
+    font-weight:500;
+    color:var(--text-primary);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .card-subtitle{
+    font-size:14px;
+    font-weight:400;
+    color:var(--amber);
+  }
+
+  .more-btn{
+    background:none;
+    border:none;
+    color:var(--text-primary);
+    font-size:20px;
+    letter-spacing:2px;
+    cursor:pointer;
+    padding:4px 6px;
+    flex-shrink:0;
+  }
+
+  /* ---------- Create new category ---------- */
+  .create-card{
+    border:1px dashed var(--dashed-border);
+    background:transparent;
+    border-radius:16px;
+    padding:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    cursor:pointer;
+    min-height:60px;
+  }
+
+  .create-card .plus{
+    color:var(--text-secondary);
+    font-size:18px;
+    line-height:1;
+  }
+
+  .create-card span.label{
+    color:var(--text-secondary);
+    font-size:14px;
+    font-weight:400;
+  }
+
+  .create-card:hover{
+    border-color:#5a5a5a;
+  }
+  .create-card:hover span.label,
+  .create-card:hover .plus{
+    color:#a8a8a8;
+  }
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <!-- Header -->
+  <div class="header-row">
+    <div class="screen-title">Category</div>
+    <button class="settings-btn" aria-label="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="status-banner">Categories display on homepage</div>
+
+  <!-- Section header -->
+  <div class="section-title">Manage Categories</div>
+
+  <!-- Cards -->
+  <div class="card-list">
+
+    <div class="category-card">
+      <div class="drag-handle">
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">💼 Office Work</div>
+        <div class="card-subtitle">5/7 task</div>
+      </div>
+      <button class="more-btn" aria-label="More options">•••</button>
+    </div>
+
+    <div class="category-card">
+      <div class="drag-handle">
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">🏠 Home Chores</div>
+        <div class="card-subtitle">2/4 task</div>
+      </div>
+      <button class="more-btn" aria-label="More options">•••</button>
+    </div>
+
+    <div class="category-card">
+      <div class="drag-handle">
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">📚 Study</div>
+        <div class="card-subtitle">3/3 task</div>
+      </div>
+      <button class="more-btn" aria-label="More options">•••</button>
+    </div>
+
+    <div class="category-card">
+      <div class="drag-handle">
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+        <div class="dot-row"><span class="dot"></span><span class="dot"></span></div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">🏋️ Fitness</div>
+        <div class="card-subtitle">1/5 task</div>
+      </div>
+      <button class="more-btn" aria-label="More options">•••</button>
+    </div>
+
+    <!-- Create new category -->
+    <div class="create-card" role="button" tabindex="0">
+      <span class="plus">+</span>
+      <span class="label">Create new category</span>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -47,13 +47,18 @@ const TaskModelSchema = CollectionSchema(
       name: r'notify',
       type: IsarType.bool,
     ),
-    r'priorityIndex': PropertySchema(
+    r'orderIndex': PropertySchema(
       id: 6,
+      name: r'orderIndex',
+      type: IsarType.long,
+    ),
+    r'priorityIndex': PropertySchema(
+      id: 7,
       name: r'priorityIndex',
       type: IsarType.long,
     ),
     r'title': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'title',
       type: IsarType.string,
     )
@@ -100,8 +105,9 @@ void _taskModelSerialize(
   writer.writeString(offsets[3], object.description);
   writer.writeDateTime(offsets[4], object.dueAt);
   writer.writeBool(offsets[5], object.notify);
-  writer.writeLong(offsets[6], object.priorityIndex);
-  writer.writeString(offsets[7], object.title);
+  writer.writeLong(offsets[6], object.orderIndex);
+  writer.writeLong(offsets[7], object.priorityIndex);
+  writer.writeString(offsets[8], object.title);
 }
 
 TaskModel _taskModelDeserialize(
@@ -118,8 +124,9 @@ TaskModel _taskModelDeserialize(
   object.dueAt = reader.readDateTimeOrNull(offsets[4]);
   object.id = id;
   object.notify = reader.readBool(offsets[5]);
-  object.priorityIndex = reader.readLong(offsets[6]);
-  object.title = reader.readString(offsets[7]);
+  object.orderIndex = reader.readLong(offsets[6]);
+  object.priorityIndex = reader.readLong(offsets[7]);
+  object.title = reader.readString(offsets[8]);
   return object;
 }
 
@@ -145,6 +152,8 @@ P _taskModelDeserializeProp<P>(
     case 6:
       return (reader.readLong(offset)) as P;
     case 7:
+      return (reader.readLong(offset)) as P;
+    case 8:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -644,6 +653,60 @@ extension TaskModelQueryFilter
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> orderIndexEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      orderIndexGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> orderIndexLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'orderIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> orderIndexBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'orderIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
       priorityIndexEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
@@ -910,6 +973,18 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByPriorityIndex() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priorityIndex', Sort.asc);
@@ -1021,6 +1096,18 @@ extension TaskModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByOrderIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'orderIndex', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByPriorityIndex() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'priorityIndex', Sort.asc);
@@ -1085,6 +1172,12 @@ extension TaskModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByOrderIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'orderIndex');
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByPriorityIndex() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'priorityIndex');
@@ -1140,6 +1233,12 @@ extension TaskModelQueryProperty
   QueryBuilder<TaskModel, bool, QQueryOperations> notifyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'notify');
+    });
+  }
+
+  QueryBuilder<TaskModel, int, QQueryOperations> orderIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'orderIndex');
     });
   }
 

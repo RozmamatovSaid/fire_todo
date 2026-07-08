@@ -12,6 +12,7 @@ import '../../features/home/domain/repository/task_repository.dart';
 import '../../features/home/domain/usecase/add_category.dart';
 import '../../features/home/domain/usecase/delete_category.dart';
 import '../../features/home/domain/usecase/get_all_categories.dart';
+import '../../features/home/domain/usecase/update_category.dart';
 import '../../features/home/domain/usecase/task/add_task.dart';
 import '../../features/home/domain/usecase/task/delete_task.dart';
 import '../../features/home/domain/usecase/task/get_all_tasks.dart';
@@ -52,6 +53,9 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<GetAllCategoriesUseCase>(
     () => GetAllCategoriesUseCase(repo: getIt<CategoryRepository>()),
   );
+  getIt.registerLazySingleton<UpdateCategoryUseCase>(
+    () => UpdateCategoryUseCase(repo: getIt<CategoryRepository>()),
+  );
 
   // category bloc
   getIt.registerFactory<CategoryBloc>(
@@ -59,6 +63,7 @@ Future<void> setupDependencies() async {
       addCategory: getIt<AddCategoryUseCase>(),
       deleteCategory: getIt<DeleteCategoryUseCase>(),
       getAllCategories: getIt<GetAllCategoriesUseCase>(),
+      updateCategory: getIt<UpdateCategoryUseCase>(),
     ),
   );
 

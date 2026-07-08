@@ -6,6 +6,6 @@ abstract class CategoryRepository {
   Future<Either<Failure, void>> addCategory(String name);
   Future<Either<Failure, void>> deleteCategory(int id);
   Future<Either<Failure, List<CategoryEntity>>> getAllCategories();
-  // Stream<Either<Failure, List<CategoryEntity>>> watchCategories();
+  Future<Either<Failure, void>> updateCategory(CategoryEntity category);
 }
 

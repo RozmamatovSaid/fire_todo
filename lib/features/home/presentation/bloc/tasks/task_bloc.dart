@@ -130,6 +130,30 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         await _loadTasks(emit);
       }
     });
+
+    on<ReorderTasksEvent>((event, emit) async {
+      emit(const TaskLoadingState());
+
+      for (final task in event.tasks) {
+        await updateTask(task);
+      }
+
+      if (_lastLoadedCategoryId != null) {
+        final result = await getByCategoryId(_lastLoadedCategoryId!);
+        result.fold(
+          (failure) => emit(TaskFailureState(message: failure.message)),
+          (tasks) => emit(TasksLoadedState(taskEntity: tasks)),
+        );
+      } else if (_lastLoadedDate != null) {
+        final result = await getByDate(_lastLoadedDate!);
+        result.fold(
+          (failure) => emit(TaskFailureState(message: failure.message)),
+          (tasks) => emit(TasksLoadedState(taskEntity: tasks)),
+        );
+      } else {
+        await _loadTasks(emit);
+      }
+    });
   }
 
   Future<void> _loadTasks(Emitter<TaskState> emit) async {

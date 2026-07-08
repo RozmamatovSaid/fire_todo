@@ -28,3 +28,12 @@ class DeleteCategoryEvent extends CategoryEvent {
 class GetAllCategoriesEvent extends CategoryEvent {
   const GetAllCategoriesEvent();
 }
+
+class EditCategoryEvent extends CategoryEvent {
+  final CategoryEntity category;
+
+  const EditCategoryEvent({required this.category});
+
+  @override
+  List<Object?> get props => [category];
+}

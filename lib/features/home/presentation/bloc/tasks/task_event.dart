@@ -65,3 +65,12 @@ class UpdateTaskEvent extends TaskEvent {
   @override
   List<Object?> get props => [taskEntity];
 }
+
+class ReorderTasksEvent extends TaskEvent {
+  final List<TaskEntity> tasks;
+
+  const ReorderTasksEvent({required this.tasks});
+
+  @override
+  List<Object?> get props => [tasks];
+}

@@ -1,4 +1,3 @@
-// TaskModel (Database)
 import 'package:fire_todo/shared/global/domain/entity/task_entity.dart';
 import 'package:isar/isar.dart';
 part 'task_model.g.dart';
@@ -13,6 +12,7 @@ class TaskModel {
   late DateTime createdAt;
   bool check = false;
   bool notify = false;
+  int orderIndex = 0;
 
   DateTime? dueAt; 
   String? description;
@@ -28,6 +28,7 @@ class TaskModel {
       createdAt: createdAt,
       dueAt: dueAt,
       description: description,
+      orderIndex: orderIndex,
     );
   }
 
@@ -40,9 +41,9 @@ class TaskModel {
       ..notify = e.notify
       ..createdAt = e.createdAt
       ..dueAt = e.dueAt
-      ..description = e.description;
+      ..description = e.description
+      ..orderIndex = e.orderIndex;
 
-    // UPDATE bo‘lsa id bor, INSERT’da bo‘sh qolsin (autoIncrement ishlaydi)
     if (e.id != null) m.id = e.id!;
     return m;
   }

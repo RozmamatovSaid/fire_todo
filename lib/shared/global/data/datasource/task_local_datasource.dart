@@ -21,6 +21,11 @@ class TaskLocalDatasourceImpl implements TaskLocalDatasource {
   @override
   Future<void> addTask(TaskModel task) async {
     final isar = await IsarService.getInstance();
+    final tasks = await isar.taskModels.where().findAll();
+    final maxOrderIndex = tasks.isEmpty
+        ? 0
+        : tasks.map((t) => t.orderIndex).reduce((a, b) => a > b ? a : b);
+    task.orderIndex = maxOrderIndex + 1;
     await isar.writeTxn(() => isar.taskModels.put(task));
   }
 
@@ -33,7 +38,7 @@ class TaskLocalDatasourceImpl implements TaskLocalDatasource {
   @override
   Future<List<TaskModel>> getAllTasks() async {
     final isar = await IsarService.getInstance();
-    return await isar.taskModels.where().findAll();
+    return await isar.taskModels.where().sortByOrderIndex().findAll();
   }
 
   @override
@@ -43,6 +48,7 @@ class TaskLocalDatasourceImpl implements TaskLocalDatasource {
     return await isar.taskModels
         .filter()
         .categoryIdEqualTo(categoryId)
+        .sortByOrderIndex()
         .findAll();
   }
 
@@ -61,7 +67,7 @@ class TaskLocalDatasourceImpl implements TaskLocalDatasource {
     return await isar.taskModels
         .filter()
         .dueAtBetween(startOfDay, endOfDay)
-        .sortByDueAt()
+        .sortByOrderIndex()
         .findAll();
   }
 }

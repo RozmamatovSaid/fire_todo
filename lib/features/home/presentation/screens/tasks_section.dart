@@ -146,23 +146,40 @@ class _TasksSectionState extends State<TasksSection>
     return const TaskNotAvailableWidget();
   }
 
-  // Task list widget
   Widget _buildTaskList(List<TaskEntity> tasks) {
     final sortedTasks = _sortTasks(tasks);
 
-    return ListView.separated(
+    return ReorderableListView.builder(
       padding: const EdgeInsets.only(bottom: 40),
+      buildDefaultDragHandles: false,
       itemCount: sortedTasks.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 8),
+      onReorderItem: (oldIndex, newIndex) {
+        final item = sortedTasks.removeAt(oldIndex);
+        sortedTasks.insert(newIndex, item);
+
+        final updatedTasks = <TaskEntity>[];
+        for (int i = 0; i < sortedTasks.length; i++) {
+          updatedTasks.add(sortedTasks[i].copyWith(orderIndex: i));
+        }
+
+        context.read<TaskBloc>().add(ReorderTasksEvent(tasks: updatedTasks));
+      },
       itemBuilder: (context, index) {
         final task = sortedTasks[index];
 
-        return TaskItemCard(
-          task: task,
-          reorderController: _reorderController,
-          onToggleTask: () => _toggleTask(task),
-          onDeleteTask: () => _deleteTask(task),
-          onOpenTaskDetail: () => _openTaskDetail(task),
+        return ReorderableDragStartListener(
+          key: ValueKey(task.id),
+          index: index,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: TaskItemCard(
+              task: task,
+              reorderController: _reorderController,
+              onToggleTask: () => _toggleTask(task),
+              onDeleteTask: () => _deleteTask(task),
+              onOpenTaskDetail: () => _openTaskDetail(task),
+            ),
+          ),
         );
       },
     );

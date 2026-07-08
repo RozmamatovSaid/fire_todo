@@ -8,9 +8,11 @@ import '../../core/constants/app_colors.dart';
 
 Future<String?> showAddCategoryDialog(
   BuildContext context,
-  String newEmoji,
-) async {
-  final TextEditingController controller = TextEditingController();
+  String newEmoji, {
+  String initialName = '',
+}) async {
+  final TextEditingController controller =
+      TextEditingController(text: initialName);
 
   final result = await showDialog<String>(
     context: context,
