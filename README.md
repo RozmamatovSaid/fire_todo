@@ -173,7 +173,21 @@ Translation files are located in `assets/i18n/`.
 
 ## 📸 Screenshots
 
-> _Coming soon_
+<table>
+  <tr>
+    <td align="center"><img src="assets/readme/1.png" width="220"/></td>
+    <td align="center"><img src="assets/readme/2.png" width="220"/></td>
+    <td align="center"><img src="assets/readme/3.png" width="220"/></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/readme/4.png" width="220"/></td>
+    <td align="center"><img src="assets/readme/5.png" width="220"/></td>
+    <td align="center"><img src="assets/readme/6.png" width="220"/></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/readme/7.png" width="220"/></td>
+  </tr>
+</table>
 
 ---
 
