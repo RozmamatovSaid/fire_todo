@@ -34,7 +34,6 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _preSelectedCategoryId = categoryId;
     });
-    print('MainScreen: Category changed to $categoryId');
   }
 
   @override

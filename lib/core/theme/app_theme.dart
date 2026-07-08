@@ -23,10 +23,8 @@ abstract class CustomTheme {
     colorScheme: const ColorScheme.dark(
       primary: AppColors.purple,
       surface: AppColors.background,
-      background: AppColors.background,
       onPrimary: AppColors.white,
       onSurface: AppColors.white,
-      onBackground: AppColors.white,
     ),
     // Text theme
     textTheme: const TextTheme(

@@ -213,10 +213,7 @@ class _CustomDatePickerWidgetState extends State<CustomDatePickerWidget> {
 
         // Week days header
         Row(
-          children: _weekDays.asMap().entries.map((entry) {
-            int index = entry.key;
-            String day = entry.value;
-
+          children: _weekDays.map((day) {
             return Expanded(
               child: Container(
                 height: 40,
@@ -254,7 +251,7 @@ class _CustomDatePickerWidgetState extends State<CustomDatePickerWidget> {
                 child: GlobalText(
                   AppStrings.cancel,
                   fontSize: 16,
-                  color: textColor.withOpacity(0.7),
+                  color: textColor.withValues(alpha: 0.7),
                 ),
               ),
             ElevatedButton(
@@ -365,7 +362,7 @@ class _CustomDatePickerWidgetState extends State<CustomDatePickerWidget> {
                   fontSize: 16,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                   color: !isEnabled
-                      ? textColor.withOpacity(0.3)
+                      ? textColor.withValues(alpha: 0.3)
                       : isSelected
                       ? backgroundColor
                       : textColor,

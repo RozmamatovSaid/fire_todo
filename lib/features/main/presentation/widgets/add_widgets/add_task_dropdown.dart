@@ -3,7 +3,7 @@ import '../../../index.dart';
 
 class AddTaskDropDownButton extends StatefulWidget {
   final Function(int) onCategorySelected;
-  final int? initialCategoryId; 
+  final int? initialCategoryId;
 
   const AddTaskDropDownButton({
     super.key,
@@ -22,7 +22,6 @@ class _AddTaskDropDownButtonState extends State<AddTaskDropDownButton> {
   void initState() {
     super.initState();
     selectedCategoryId = widget.initialCategoryId;
-    print('DropDown: Initialized with category ID: $selectedCategoryId');
 
     if (selectedCategoryId != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -39,9 +38,6 @@ class _AddTaskDropDownButtonState extends State<AddTaskDropDownButton> {
           if (selectedCategoryId == null ||
               !state.categories.any((cat) => cat.id == selectedCategoryId)) {
             selectedCategoryId = state.categories.first.id;
-            print(
-              'DropDown: Auto-selected first category: $selectedCategoryId',
-            );
 
             // Callback chaqiring
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -49,16 +45,10 @@ class _AddTaskDropDownButtonState extends State<AddTaskDropDownButton> {
             });
           }
 
-          // Selected category mavjudligini tekshiring
-          final selectedCategory = state.categories.firstWhere(
-            (cat) => cat.id == selectedCategoryId,
-            orElse: () => state.categories.first,
-          );
-
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.grey.withOpacity(0.3)),
+              border: Border.all(color: AppColors.grey.withValues(alpha: 0.3)),
               borderRadius: BorderRadius.circular(8),
             ),
             child: DropdownButton<int>(
@@ -88,7 +78,6 @@ class _AddTaskDropDownButtonState extends State<AddTaskDropDownButton> {
                     selectedCategoryId = newValue;
                   });
                   widget.onCategorySelected(newValue);
-                  print('DropDown: User selected category: $newValue');
                 }
               },
             ),
@@ -97,7 +86,7 @@ class _AddTaskDropDownButtonState extends State<AddTaskDropDownButton> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            border: Border.all(color: AppColors.grey.withOpacity(0.3)),
+            border: Border.all(color: AppColors.grey.withValues(alpha: 0.3)),
             borderRadius: BorderRadius.circular(8),
           ),
           child: const Text(

@@ -36,7 +36,7 @@ class _CalendarButtonState extends State<CalendarButton> {
   Color get surfaceColor => widget.surfaceColor ?? AppColors.darkGrey;
   Color get textColor => widget.textColor ?? AppColors.white;
 
-  Future<void> _showCustomCalendar(BuildContext context) async {
+  Future<void> _showCustomCalendar() async {
     FocusScope.of(context).unfocus();
 
     final DateTime? pickedDate = await CustomDatePicker.show(
@@ -53,16 +53,16 @@ class _CalendarButtonState extends State<CalendarButton> {
       todayColor: AppColors.grey500,
     );
 
-    if (pickedDate != null && mounted) {
-      setState(() {
-        selectedDate = pickedDate;
-      });
+    if (!mounted || pickedDate == null) return;
 
-      await _showTimePicker(context);
-    }
+    setState(() {
+      selectedDate = pickedDate;
+    });
+
+    await _showTimePicker();
   }
 
-  Future<void> _showTimePicker(BuildContext context) async {
+  Future<void> _showTimePicker() async {
     final TimeOfDay? pickedTime = await CustomTimePicker.show(
       context,
       initialTime: selectedTime ?? TimeOfDay.now(),
@@ -74,7 +74,9 @@ class _CalendarButtonState extends State<CalendarButton> {
       use24HourFormat: false,
     );
 
-    if (pickedTime != null && selectedDate != null && mounted) {
+    if (!mounted) return;
+
+    if (pickedTime != null && selectedDate != null) {
       setState(() {
         selectedTime = pickedTime;
         notificationEnabled = true;
@@ -116,7 +118,7 @@ class _CalendarButtonState extends State<CalendarButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _showCustomCalendar(context),
+      onTap: _showCustomCalendar,
       onLongPress: selectedDate != null || selectedTime != null
           ? _clearSelection
           : null,
@@ -124,7 +126,7 @@ class _CalendarButtonState extends State<CalendarButton> {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: selectedDate != null || selectedTime != null
-              ? primaryColor.withOpacity(0.3)
+              ? primaryColor.withValues(alpha: 0.3)
               : surfaceColor,
           borderRadius: BorderRadius.circular(50),
           border: notificationEnabled
@@ -145,7 +147,7 @@ class _CalendarButtonState extends State<CalendarButton> {
                 Icons.access_time,
                 color: selectedTime != null
                     ? primaryColor
-                    : textColor.withOpacity(0.7),
+                    : textColor.withValues(alpha: 0.7),
                 size: 16,
               ),
             ],

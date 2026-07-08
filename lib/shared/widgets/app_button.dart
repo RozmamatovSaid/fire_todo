@@ -71,8 +71,9 @@ class _AppButtonState extends State<AppButton>
     // Faqat isEnable true bo'lganda ishlaydi
     if (!widget.isEnable ||
         _isInternalLoadingNotifier.value ||
-        widget.isLoading)
+        widget.isLoading) {
       return;
+    }
 
     if (widget.onPressed != null) {
       // Bosish animatsyasi boshlash
@@ -130,7 +131,7 @@ class _AppButtonState extends State<AppButton>
                       width: widget.width,
                       decoration: BoxDecoration(
                         color: isLoading
-                            ? currentBackgroundColor.withOpacity(0.7)
+                            ? currentBackgroundColor.withValues(alpha: 0.7)
                             : currentBackgroundColor,
                         borderRadius: BorderRadius.circular(
                           widget.borderRadius,
@@ -139,8 +140,8 @@ class _AppButtonState extends State<AppButton>
                             ? []
                             : [
                                 BoxShadow(
-                                  color: currentBackgroundColor.withOpacity(
-                                    0.3,
+                                  color: currentBackgroundColor.withValues(
+                                    alpha: 0.3,
                                   ),
                                   blurRadius: 8,
                                   offset: const Offset(0, 4),
@@ -154,7 +155,7 @@ class _AppButtonState extends State<AppButton>
                               ? _handleTap
                               : null,
                           splashColor: widget.isEnable
-                              ? Colors.white.withOpacity(0.1)
+                              ? Colors.white.withValues(alpha: 0.1)
                               : Colors.transparent,
                           highlightColor: Colors.transparent,
                           borderRadius: BorderRadius.circular(

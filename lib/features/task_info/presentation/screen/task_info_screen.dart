@@ -6,7 +6,6 @@ import 'package:fire_todo/features/task_info/presentation/widgets/custom_date_pi
 import 'package:fire_todo/features/task_info/presentation/widgets/custom_time_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pull_down_button/pull_down_button.dart';
 import '../bloc/task_info_bloc.dart';
 
 class TaskInfo extends StatelessWidget {
@@ -227,29 +226,35 @@ class _TaskInfoView extends StatelessWidget {
     BuildContext context,
     List<CategoryEntity> categories,
   ) async {
-    final screenSize = MediaQuery.of(context).size;
-    final centerRect = Rect.fromCenter(
-      center: Offset(screenSize.width / 2, screenSize.width / 1.5),
-      width: 0,
-      height: 0,
-    );
-
-    await showPullDownMenu(
+    final selectedCategory = await showMenu<CategoryEntity>(
       context: context,
+      color: AppColors.darkGrey,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      position: _centerMenuPosition(context),
       items: categories
           .map(
-            (category) => PullDownMenuItem(
-              onTap: () {
-                context.read<TaskInfoBloc>().add(
-                  UpdateCategoryEvent(category: category),
-                );
-              },
-              title: category.name,
-              icon: CupertinoIcons.circle,
+            (category) => PopupMenuItem<CategoryEntity>(
+              value: category,
+              child: Row(
+                children: [
+                  Icon(CupertinoIcons.circle, color: AppColors.white),
+                  const SizedBox(width: 12),
+                  GlobalText(
+                    category.name,
+                    color: AppColors.white,
+                    useTranslation: false,
+                  ),
+                ],
+              ),
             ),
           )
           .toList(),
-      position: centerRect,
+    );
+
+    if (!context.mounted || selectedCategory == null) return;
+
+    context.read<TaskInfoBloc>().add(
+      UpdateCategoryEvent(category: selectedCategory),
     );
   }
 
@@ -269,9 +274,9 @@ class _TaskInfoView extends StatelessWidget {
       todayColor: AppColors.grey500,
     );
 
-    if (pickedDate != null) {
-      context.read<TaskInfoBloc>().add(UpdateDateEvent(date: pickedDate));
-    }
+    if (!context.mounted || pickedDate == null) return;
+
+    context.read<TaskInfoBloc>().add(UpdateDateEvent(date: pickedDate));
   }
 
   // Time Picker
@@ -306,9 +311,9 @@ class _TaskInfoView extends StatelessWidget {
       use24HourFormat: false,
     );
 
-    if (pickedTime != null) {
-      context.read<TaskInfoBloc>().add(UpdateTimeEvent(time: pickedTime));
-    }
+    if (!context.mounted || pickedTime == null) return;
+
+    context.read<TaskInfoBloc>().add(UpdateTimeEvent(time: pickedTime));
   }
 
   // Priority Picker
@@ -331,35 +336,39 @@ class _TaskInfoView extends StatelessWidget {
       },
     ];
 
-    final screenSize = MediaQuery.of(context).size;
-    final centerRect = Rect.fromCenter(
-      center: Offset(screenSize.width / 2, screenSize.width / 1.5),
-      width: 0,
-      height: 0,
-    );
-
-    await showPullDownMenu(
+    final selectedPriority = await showMenu<TaskPriority>(
       context: context,
+      color: AppColors.darkGrey,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      position: _centerMenuPosition(context),
       items: priorities
           .map(
-            (priority) => PullDownMenuItem(
-              onTap: () {
-                context.read<TaskInfoBloc>().add(
-                  UpdatePriorityEvent(
-                    priority: priority['value'] as TaskPriority,
+            (priority) => PopupMenuItem<TaskPriority>(
+              value: priority['value'] as TaskPriority,
+              child: Row(
+                children: [
+                  GlobalImage(
+                    priority['icon'] as String,
+                    width: 20,
+                    height: 20,
                   ),
-                );
-              },
-              title: priority['name'] as String,
-              iconWidget: GlobalImage(
-                priority['icon'] as String,
-                width: 20,
-                height: 20,
+                  const SizedBox(width: 12),
+                  GlobalText(
+                    priority['name'] as String,
+                    color: AppColors.white,
+                    useTranslation: false,
+                  ),
+                ],
               ),
             ),
           )
           .toList(),
-      position: centerRect,
+    );
+
+    if (!context.mounted || selectedPriority == null) return;
+
+    context.read<TaskInfoBloc>().add(
+      UpdatePriorityEvent(priority: selectedPriority),
     );
   }
 
@@ -374,9 +383,9 @@ class _TaskInfoView extends StatelessWidget {
       },
     );
 
-    if (shouldDelete == true) {
-      context.pop();
-    }
+    if (!context.mounted || shouldDelete != true) return;
+
+    context.pop();
   }
 
   // Helper Methods
@@ -400,6 +409,17 @@ class _TaskInfoView extends StatelessWidget {
       case TaskPriority.high:
         return AppAssets.flagRed;
     }
+  }
+
+  RelativeRect _centerMenuPosition(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final centerRect = Rect.fromCenter(
+      center: Offset(screenSize.width / 2, screenSize.height / 2),
+      width: 0,
+      height: 0,
+    );
+
+    return RelativeRect.fromRect(centerRect, Offset.zero & screenSize);
   }
 
   String _formatDate(DateTime? date) {

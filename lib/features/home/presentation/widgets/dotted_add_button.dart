@@ -97,8 +97,8 @@ class _DottedAddButtonState extends State<DottedAddButton>
         child: InkWell(
           onTap: widget.onTap,
           borderRadius: BorderRadius.circular(39),
-          highlightColor: Colors.white.withOpacity(0.3),
-          splashColor: Colors.white.withOpacity(0.2),
+          highlightColor: Colors.white.withValues(alpha: 0.3),
+          splashColor: Colors.white.withValues(alpha: 0.2),
           child: DottedBorder(
             options: RoundedRectDottedBorderOptions(
               dashPattern: [6, 3],
@@ -124,8 +124,8 @@ class _DottedAddButtonState extends State<DottedAddButton>
       child: InkWell(
         onTap: widget.onTap,
         borderRadius: BorderRadius.circular(39),
-        highlightColor: Colors.white.withOpacity(0.3),
-        splashColor: Colors.white.withOpacity(0.2),
+        highlightColor: Colors.white.withValues(alpha: 0.3),
+        splashColor: Colors.white.withValues(alpha: 0.2),
         child: AnimatedBuilder(
           animation: Listenable.merge([_controller, _gradientController]),
           builder: (context, child) {
@@ -151,9 +151,9 @@ class _DottedAddButtonState extends State<DottedAddButton>
                             begin: Alignment.centerRight,
                             end: Alignment.centerLeft,
                             colors: [
-                              Colors.white.withOpacity(0.1),
+                              Colors.white.withValues(alpha: 0.1),
                               Colors.transparent,
-                              Colors.white.withOpacity(0.1),
+                              Colors.white.withValues(alpha: 0.1),
                             ],
                             stops: [
                               (_gradientPosition.value - 0.3).clamp(0.0, 1.0),

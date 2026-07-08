@@ -16,6 +16,18 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+subprojects {
+    plugins.withId("com.android.library") {
+        if (name == "isar_flutter_libs") {
+            extensions.findByName("android")?.let { androidExtension ->
+                androidExtension.javaClass
+                    .getMethod("setNamespace", String::class.java)
+                    .invoke(androidExtension, "dev.isar.isar_flutter_libs")
+            }
+        }
+    }
+}
+
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }

@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Fire Todo (iOS)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Fire Todo (iOS profile)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Fire Todo (Android)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Fire Todo (Android profile)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Fire Todo (Web)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "chrome",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

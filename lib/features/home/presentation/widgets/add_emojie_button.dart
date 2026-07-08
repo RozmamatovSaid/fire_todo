@@ -14,7 +14,7 @@ class EmojiPickerBottomSheet extends StatefulWidget {
   EmojiPickerBottomSheet({super.key, required this.onEmojiSelected});
 
   @override
-  _EmojiPickerBottomSheetState createState() => _EmojiPickerBottomSheetState();
+  State<EmojiPickerBottomSheet> createState() => _EmojiPickerBottomSheetState();
 }
 
 class _EmojiPickerBottomSheetState extends State<EmojiPickerBottomSheet>

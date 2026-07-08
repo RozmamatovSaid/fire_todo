@@ -148,7 +148,7 @@ class _CustomTimePickerWidgetState extends State<CustomTimePickerWidget> {
                       child: GlobalText(
                         AppStrings.hour,
                         fontSize: 12,
-                        color: textColor.withOpacity(0.7),
+                        color: textColor.withValues(alpha: 0.7),
                       ),
                     ),
                     Expanded(
@@ -173,8 +173,9 @@ class _CustomTimePickerWidgetState extends State<CustomTimePickerWidget> {
                             } else {
                               int hour = index + 1;
                               if (hour == 12) hour = 0;
-                              if (selectedTime.period == DayPeriod.pm)
+                              if (selectedTime.period == DayPeriod.pm) {
                                 hour += 12;
+                              }
                               selectedTime = selectedTime.replacing(hour: hour);
                             }
                           });
@@ -201,7 +202,7 @@ class _CustomTimePickerWidgetState extends State<CustomTimePickerWidget> {
                                     : FontWeight.normal,
                                 color: isSelected
                                     ? primaryColor
-                                    : textColor.withOpacity(0.7),
+                                    : textColor.withValues(alpha: 0.7),
                                 useTranslation: false,
                               ),
                             );
@@ -231,7 +232,7 @@ class _CustomTimePickerWidgetState extends State<CustomTimePickerWidget> {
                       child: GlobalText(
                         AppStrings.minute,
                         fontSize: 12,
-                        color: textColor.withOpacity(0.7),
+                        color: textColor.withValues(alpha: 0.7),
                       ),
                     ),
                     Expanded(
@@ -264,7 +265,7 @@ class _CustomTimePickerWidgetState extends State<CustomTimePickerWidget> {
                                     : FontWeight.normal,
                                 color: isSelected
                                     ? primaryColor
-                                    : textColor.withOpacity(0.7),
+                                    : textColor.withValues(alpha: 0.7),
                                 useTranslation: false,
                               ),
                             );
@@ -288,7 +289,7 @@ class _CustomTimePickerWidgetState extends State<CustomTimePickerWidget> {
                         child: GlobalText(
                           AppStrings.period,
                           fontSize: 12,
-                          color: textColor.withOpacity(0.7),
+                          color: textColor.withValues(alpha: 0.7),
                         ),
                       ),
                       Expanded(
@@ -343,7 +344,7 @@ class _CustomTimePickerWidgetState extends State<CustomTimePickerWidget> {
                                       : FontWeight.normal,
                                   color: isSelected
                                       ? primaryColor
-                                      : textColor.withOpacity(0.7),
+                                      : textColor.withValues(alpha: 0.7),
                                   useTranslation: false,
                                 ),
                               );
@@ -377,7 +378,7 @@ class _CustomTimePickerWidgetState extends State<CustomTimePickerWidget> {
                 child: GlobalText(
                   AppStrings.cancel,
                   fontSize: 16,
-                  color: textColor.withOpacity(0.7),
+                  color: textColor.withValues(alpha: 0.7),
                 ),
               ),
             ElevatedButton(

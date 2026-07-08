@@ -61,7 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     widget.onSelectedCategoryChanged?.call(null);
     context.read<TaskBloc>().add(const GetAllTasksEvent());
-    print('Selected: All Tasks');
   }
 
   void _selectCategory(int categoryId, String categoryName) {
@@ -72,7 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<TaskBloc>().add(
       GetTasksByCategoryEvent(categoryId: categoryId),
     );
-    print('Selected category: $categoryName (ID: $categoryId)');
   }
 
   void _handleCategoryDelete(int categoryId) {
@@ -182,8 +180,6 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 50,
             child: BlocBuilder<CategoryBloc, CategoryState>(
               builder: (context, state) {
-                print('[HOME] Building with state: ${state.runtimeType}');
-
                 final rowChildren = <Widget>[
                   DottedAddButton(
                     onTap: _showAddCategoryDialog,
@@ -201,9 +197,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
+                        color: Colors.red.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.red.withOpacity(0.3)),
+                        border: Border.all(
+                          color: Colors.red.withValues(alpha: 0.3),
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -242,8 +240,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.transparent,
                           child: InkWell(
                             borderRadius: BorderRadius.circular(39),
-                            highlightColor: AppColors.gold.withOpacity(0.2),
-                            splashColor: AppColors.gold.withOpacity(0.1),
+                            highlightColor: AppColors.gold.withValues(
+                              alpha: 0.2,
+                            ),
+                            splashColor: AppColors.gold.withValues(alpha: 0.1),
                             onTap: _selectAllTasks,
                             child: Container(
                               padding: const EdgeInsets.symmetric(

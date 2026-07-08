@@ -39,10 +39,6 @@ Future<void> showAddTaskDialog(
     selectedCategoryId = categoryState.categories.first.id;
   }
 
-  print(
-    'AddTaskDialog: Selected category ID for new task: $selectedCategoryId',
-  );
-
   await showDialog<void>(
     context: context,
     barrierDismissible: true,
@@ -102,9 +98,6 @@ Future<void> showAddTaskDialog(
                                               selectedCategoryId, // Default qiymat
                                           onCategorySelected: (categoryId) {
                                             selectedCategoryId = categoryId;
-                                            print(
-                                              'DropDown: Category changed to $categoryId',
-                                            );
                                           },
                                         ),
                                         const SizedBox(width: 8),
@@ -152,10 +145,6 @@ Future<void> showAddTaskDialog(
                                             notify: notificationEnabled,
                                             createdAt: DateTime.now(),
                                             dueAt: selectedDateTime,
-                                          );
-
-                                          print(
-                                            'Creating task with category ID: $selectedCategoryId',
                                           );
 
                                           // Bloc orqali task qo'shish

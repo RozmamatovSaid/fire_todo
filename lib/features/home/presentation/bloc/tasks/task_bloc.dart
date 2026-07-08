@@ -90,7 +90,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<ClearTasksEvent>((event, emit) async {
       emit(const TasksLoadedState(taskEntity: []));
       _lastLoadedCategoryId = null;
-      print('Tasks cleared - no categories available');
     });
 
     on<UpdateTaskEvent>((event, emit) async {

@@ -20,27 +20,27 @@ class TaskLocalDatasourceImpl implements TaskLocalDatasource {
 
   @override
   Future<void> addTask(TaskModel task) async {
-    final _isar = await IsarService.getInstance();
-    await _isar.writeTxn(() => _isar.taskModels.put(task));
+    final isar = await IsarService.getInstance();
+    await isar.writeTxn(() => isar.taskModels.put(task));
   }
 
   @override
   Future<void> deleteTask(int id) async {
-    final _isar = await IsarService.getInstance();
-    await _isar.writeTxn(() => _isar.taskModels.delete(id));
+    final isar = await IsarService.getInstance();
+    await isar.writeTxn(() => isar.taskModels.delete(id));
   }
 
   @override
   Future<List<TaskModel>> getAllTasks() async {
-    final _isar = await IsarService.getInstance();
-    return await _isar.taskModels.where().findAll();
+    final isar = await IsarService.getInstance();
+    return await isar.taskModels.where().findAll();
   }
 
   @override
   Future<List<TaskModel>> getTasksByCategory(int categoryId) async {
-    final _isar = await IsarService.getInstance();
+    final isar = await IsarService.getInstance();
 
-    return await _isar.taskModels
+    return await isar.taskModels
         .filter()
         .categoryIdEqualTo(categoryId)
         .findAll();
@@ -48,17 +48,17 @@ class TaskLocalDatasourceImpl implements TaskLocalDatasource {
 
   @override
   Future<void> updateTask(TaskModel task) async {
-    final _isar = await IsarService.getInstance();
-    await _isar.writeTxn(() => _isar.taskModels.put(task));
+    final isar = await IsarService.getInstance();
+    await isar.writeTxn(() => isar.taskModels.put(task));
   }
 
   @override
   Future<List<TaskModel>> getTasksByDate(DateTime date) async {
-    final _isar = await IsarService.getInstance();
+    final isar = await IsarService.getInstance();
     final startOfDay = DateTime(date.year, date.month, date.day);
     final endOfDay = DateTime(date.year, date.month, date.day, 23, 59, 59);
 
-    return await _isar.taskModels
+    return await isar.taskModels
         .filter()
         .dueAtBetween(startOfDay, endOfDay)
         .sortByDueAt()

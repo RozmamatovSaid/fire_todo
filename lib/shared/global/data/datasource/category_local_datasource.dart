@@ -22,36 +22,36 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   // kategorya qoshish
   @override
   Future<void> addCategory(String name) async {
-    final _isar = await IsarService.getInstance();
+    final isar = await IsarService.getInstance();
     final category = CategoryModel()..name = name;
-    await _isar.writeTxn(() => _isar.categoryModels.put(category));
+    await isar.writeTxn(() => isar.categoryModels.put(category));
   }
 
   @override
   Future<void> deleteCategory(int id) async {
-    final _isar = await IsarService.getInstance();
+    final isar = await IsarService.getInstance();
 
-    await _isar.writeTxn(() async {
+    await isar.writeTxn(() async {
       // shu category'ga tegishli barcha tasklarni topish
-      final tasksToDelete = await _isar.taskModels
+      final tasksToDelete = await isar.taskModels
           .filter()
           .categoryIdEqualTo(id)
           .findAll();
 
       // Barcha tasklarni o'chirish
       for (final task in tasksToDelete) {
-        await _isar.taskModels.delete(task.id);
+        await isar.taskModels.delete(task.id);
       }
 
       //  categoryni ham ochiramiz
-      await _isar.categoryModels.delete(id);
+      await isar.categoryModels.delete(id);
     });
   }
 
   // kategoryalarni olish
   @override
   Future<List<CategoryModel>> getAllCategories() async {
-    final _isar = await IsarService.getInstance();
-    return await _isar.categoryModels.where().findAll();
+    final isar = await IsarService.getInstance();
+    return await isar.categoryModels.where().findAll();
   }
 }

@@ -117,12 +117,12 @@ class TaskItemCard extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               decoration: BoxDecoration(
                 color: task.check
-                    ? AppColors.grey.withOpacity(0.5)
+                    ? AppColors.grey.withValues(alpha: 0.5)
                     : AppColors.grey,
                 borderRadius: BorderRadius.circular(16),
                 border: task.check
                     ? Border.all(
-                        color: AppColors.grey400.withOpacity(0.3),
+                        color: AppColors.grey400.withValues(alpha: 0.3),
                         width: 1,
                       )
                     : null,
@@ -132,8 +132,8 @@ class TaskItemCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(16),
-                  highlightColor: AppColors.gold.withOpacity(0.1),
-                  splashColor: AppColors.gold.withOpacity(0.2),
+                  highlightColor: AppColors.gold.withValues(alpha: 0.1),
+                  splashColor: AppColors.gold.withValues(alpha: 0.2),
                   onTap: onOpenTaskDetail,
                   child: AnimatedOpacity(
                     duration: const Duration(milliseconds: 200),
@@ -221,8 +221,8 @@ class TaskItemCard extends StatelessWidget {
                                             vertical: 2,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: AppColors.gold.withOpacity(
-                                              0.2,
+                                            color: AppColors.gold.withValues(
+                                              alpha: 0.2,
                                             ),
                                             borderRadius: BorderRadius.circular(
                                               12,
@@ -252,7 +252,7 @@ class TaskItemCard extends StatelessWidget {
                                         Icons.calendar_today,
                                         size: 14,
                                         color: task.check
-                                            ? AppColors.grey400.withOpacity(0.7)
+                                            ? AppColors.grey400.withValues(alpha: 0.7)
                                             : AppColors.grey400,
                                       ),
                                       const SizedBox(width: 4),
@@ -261,7 +261,7 @@ class TaskItemCard extends StatelessWidget {
                                             ? _formatDate(task.dueAt!)
                                             : AppStrings.noDate,
                                         color: task.check
-                                            ? AppColors.grey400.withOpacity(0.7)
+                                            ? AppColors.grey400.withValues(alpha: 0.7)
                                             : AppColors.grey400,
                                         fontSize: 12,
                                       ),
@@ -272,8 +272,8 @@ class TaskItemCard extends StatelessWidget {
                                           Icons.description,
                                           size: 14,
                                           color: task.check
-                                              ? AppColors.grey400.withOpacity(
-                                                  0.7,
+                                              ? AppColors.grey400.withValues(
+                                                  alpha: 0.7,
                                                 )
                                               : AppColors.grey400,
                                         ),

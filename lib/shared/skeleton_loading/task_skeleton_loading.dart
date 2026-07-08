@@ -62,8 +62,8 @@ class _TaskSkeletonLoadingState extends State<TaskSkeletonLoading>
                           width: 24,
                           height: 24,
                           decoration: BoxDecoration(
-                            color: AppColors.grey400.withOpacity(
-                              _animation.value,
+                            color: AppColors.grey400.withValues(
+                              alpha: _animation.value,
                             ),
                             shape: BoxShape.circle,
                           ),
@@ -75,8 +75,8 @@ class _TaskSkeletonLoadingState extends State<TaskSkeletonLoading>
                               width: 120,
                               height: 16,
                               decoration: BoxDecoration(
-                                color: AppColors.grey400.withOpacity(
-                                  _animation.value,
+                                color: AppColors.grey400.withValues(
+                                  alpha: _animation.value,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -85,8 +85,8 @@ class _TaskSkeletonLoadingState extends State<TaskSkeletonLoading>
                               width: 20,
                               height: 20,
                               decoration: BoxDecoration(
-                                color: AppColors.grey400.withOpacity(
-                                  _animation.value,
+                                color: AppColors.grey400.withValues(
+                                  alpha: _animation.value,
                                 ),
                                 borderRadius: BorderRadius.circular(4),
                               ),
@@ -98,8 +98,8 @@ class _TaskSkeletonLoadingState extends State<TaskSkeletonLoading>
                           height: 12,
                           margin: const EdgeInsets.only(top: 8),
                           decoration: BoxDecoration(
-                            color: AppColors.grey400.withOpacity(
-                              _animation.value,
+                            color: AppColors.grey400.withValues(
+                              alpha: _animation.value,
                             ),
                             borderRadius: BorderRadius.circular(6),
                           ),

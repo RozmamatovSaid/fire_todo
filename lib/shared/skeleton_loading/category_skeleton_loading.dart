@@ -39,7 +39,7 @@ class _CategorySkeletonLoadingState extends State<CategorySkeletonLoading> {
             width: 80 + (index * 15),
             height: 40,
             decoration: BoxDecoration(
-              color: AppColors.grey.withOpacity(0.2),
+              color: AppColors.grey.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Center(
@@ -48,7 +48,7 @@ class _CategorySkeletonLoadingState extends State<CategorySkeletonLoading> {
                 height: 12,
                 child: CircularProgressIndicator(
                   strokeWidth: 1.5,
-                  color: AppColors.grey.withOpacity(0.5),
+                  color: AppColors.grey.withValues(alpha: 0.5),
                 ),
               ),
             ),
