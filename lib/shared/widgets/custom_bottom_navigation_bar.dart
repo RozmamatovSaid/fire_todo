@@ -1,5 +1,6 @@
 import 'package:fire_todo/core/constants/app_assets.dart';
 import 'package:fire_todo/core/constants/app_colors.dart';
+import 'package:fire_todo/core/constants/app_strings.dart';
 import 'package:fire_todo/shared/widgets/global_image.dart';
 import 'package:fire_todo/shared/widgets/global_text.dart';
 import 'package:flutter/material.dart';
@@ -17,34 +18,36 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: BoxDecoration(color: AppColors.grey),
-      child: IntrinsicHeight(
-        child: Padding(
-          padding: EdgeInsetsGeometry.symmetric(horizontal: 27, vertical: 6),
-          child: Row(
+      decoration: const BoxDecoration(color: AppColors.grey),
+      child: SafeArea(
+        top: false,
+        child: IntrinsicHeight(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 6),
+            child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BottomNavItem(
-                title: "Home",
+                title: AppStrings.home,
                 icon: AppAssets.home,
                 onTap: () => onItemTap(0),
                 isSelected: selectedIndex == 0,
               ),
               BottomNavItem(
-                title: "Calendar",
+                title: AppStrings.calendar,
                 icon: AppAssets.calendar,
                 onTap: () => onItemTap(1),
                 isSelected: selectedIndex == 1,
               ),
-              SizedBox(width: 30),
+              const SizedBox(width: 30),
               BottomNavItem(
-                title: "Category",
+                title: AppStrings.category,
                 icon: AppAssets.category,
                 onTap: () => onItemTap(2),
                 isSelected: selectedIndex == 2,
               ),
               BottomNavItem(
-                title: "Graph",
+                title: AppStrings.graph,
                 icon: AppAssets.graph,
                 onTap: () => onItemTap(3),
                 isSelected: selectedIndex == 3,
@@ -53,7 +56,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
 

@@ -45,6 +45,9 @@ class AppStrings {
   static const String thisMonth = 'this_month';
   static const String thisYear = 'this_year';
   static const String taskSuffix = 'task_suffix';
+  static const String comingSoon = 'coming_soon';
+  static const String comingSoonDesc = 'coming_soon_desc';
+  static const String close = 'close';
   static const String delete = 'delete';
   static const String cancel = 'cancel';
   static const String deleteCategoryTitle = 'delete_category_title';

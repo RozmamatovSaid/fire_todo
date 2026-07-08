@@ -21,6 +21,7 @@ Future<String?> showAddCategoryDialog(
       return LayoutBuilder(
         builder: (context, constraints) {
           final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+          final bottomPadding = MediaQuery.of(context).padding.bottom;
 
           return Scaffold(
             backgroundColor: Colors.transparent,
@@ -36,7 +37,9 @@ Future<String?> showAddCategoryDialog(
                   ),
                 ),
                 Positioned(
-                  bottom: keyboardHeight + 20,
+                  bottom: keyboardHeight > 0
+                      ? keyboardHeight + 16
+                      : bottomPadding + 16,
                   left: 16,
                   right: 16,
                   child: Material(

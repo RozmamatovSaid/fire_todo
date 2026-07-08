@@ -241,10 +241,9 @@ class _SearchScreenState extends State<SearchScreen>
           GlobalText(
             _searchController.text.isEmpty
                 ? AppStrings.startTypingToSearch
-                : AppStrings.taskNotAvailable.tr(),
+                : AppStrings.taskNotAvailable,
             color: AppColors.grey400,
             fontSize: 16,
-            useTranslation: false,
           ),
         ],
       ),

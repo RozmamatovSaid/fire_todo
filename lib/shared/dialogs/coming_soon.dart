@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fire_todo/shared/widgets/global_text.dart';
 import 'package:fire_todo/core/constants/app_colors.dart';
+import 'package:fire_todo/core/constants/app_strings.dart';
 
 Future<void> showComingSoonDialog(BuildContext context) {
   return showDialog(
@@ -15,21 +16,21 @@ Future<void> showComingSoonDialog(BuildContext context) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
+              const Icon(
                 Icons.hourglass_empty_rounded,
                 size: 60,
                 color: AppColors.purple,
               ),
               const SizedBox(height: 20),
               const GlobalText(
-                "Coming Soon!",
+                AppStrings.comingSoon,
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
                 color: AppColors.white,
               ),
               const SizedBox(height: 8),
               const GlobalText(
-                "Bu bo‘lim hali tayyor emas,\ntez orada foydalanishga topshiriladi.",
+                AppStrings.comingSoonDesc,
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: AppColors.grey300,
@@ -50,7 +51,7 @@ Future<void> showComingSoonDialog(BuildContext context) {
                 ),
                 onPressed: () => Navigator.of(context).pop(),
                 child: const GlobalText(
-                  "Yopish",
+                  AppStrings.close,
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   color: AppColors.white,

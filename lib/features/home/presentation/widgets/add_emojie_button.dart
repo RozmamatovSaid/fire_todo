@@ -49,8 +49,10 @@ class _EmojiPickerBottomSheetState extends State<EmojiPickerBottomSheet>
         color: AppColors.background,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      child: Column(
-        children: [
+      child: SafeArea(
+        top: false,
+        child: Column(
+          children: [
           Container(
             width: 40,
             height: 4,
@@ -256,7 +258,7 @@ class _EmojiPickerBottomSheetState extends State<EmojiPickerBottomSheet>
             ),
           ),
         ],
-      ),
+      )),
     );
   }
 }
