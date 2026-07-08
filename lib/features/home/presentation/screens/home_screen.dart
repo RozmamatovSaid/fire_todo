@@ -153,6 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: AppColors.white,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
+                            useTranslation: false,
                           ),
                         ),
                         Transform.translate(

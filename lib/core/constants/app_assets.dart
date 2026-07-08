@@ -37,4 +37,5 @@ abstract class AppAssets {
   static const female = '$_imagesPath/female.png';
   static const male = '$_imagesPath/male.png';
   static const splash = '$_imagesPath/splash.png';
+  static const fireLogo = '$_imagesPath/fire_logo.png';
 }

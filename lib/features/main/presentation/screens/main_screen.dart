@@ -3,8 +3,10 @@ import 'package:fire_todo/features/category/presentation/screens/category_screen
 import 'package:fire_todo/features/graph/presentation/screens/graph_screen.dart';
 import 'package:fire_todo/features/home/presentation/screens/home_screen.dart';
 import 'package:fire_todo/features/main/presentation/screens/main_scaffold_wrapper.dart';
+import 'package:fire_todo/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:fire_todo/features/settings/presentation/cubit/settings_state.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,19 +17,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
-  late Future<String?> _userNameFuture;
   int? _preSelectedCategoryId;
-
-  @override
-  void initState() {
-    super.initState();
-    _userNameFuture = _loadUserName();
-  }
-
-  Future<String?> _loadUserName() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('user_name');
-  }
 
   // HomeScreendan selected category ID'ni olish uchun callback
   void _onCategoryChanged(int? categoryId) {
@@ -44,10 +34,11 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String?>(
-      future: _userNameFuture,
-      builder: (context, snapshot) {
-        final userName = snapshot.data ?? 'User';
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, settingsState) {
+        final userName = settingsState.username.isEmpty
+            ? 'User'
+            : settingsState.username;
 
         return MainScaffoldWrapper(
           selectedIndex: selectedIndex,
