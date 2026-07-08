@@ -260,6 +260,7 @@ class TaskItemCard extends StatelessWidget {
                                         task.dueAt != null
                                             ? _formatDate(task.dueAt!)
                                             : AppStrings.noDate,
+                                        useTranslation: task.dueAt == null,
                                         color: task.check
                                             ? AppColors.grey400.withValues(alpha: 0.7)
                                             : AppColors.grey400,

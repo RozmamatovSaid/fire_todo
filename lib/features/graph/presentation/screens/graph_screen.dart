@@ -8,11 +8,12 @@ import 'package:fire_todo/core/injection/dp_injection.dart';
 import 'package:fire_todo/features/home/domain/usecase/task/get_all_tasks.dart';
 import 'package:fire_todo/shared/global/domain/entity/task_entity.dart';
 import 'package:fire_todo/features/home/presentation/bloc/tasks/task_bloc.dart';
-import 'package:fire_todo/shared/dialogs/coming_soon.dart';
 import 'package:fire_todo/shared/widgets/action_button.dart';
 import 'package:fire_todo/shared/widgets/global_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:fire_todo/core/router/router_paths.dart';
 import '../cubit/graph_cubit.dart';
 import '../cubit/graph_state.dart';
 
@@ -153,7 +154,7 @@ class GraphView extends StatelessWidget with GraphScreenMixin {
                   ),
                   ActionButton(
                     icon: AppAssets.settings,
-                    onTap: () => showComingSoonDialog(context),
+                    onTap: () => context.push(RouterPaths.settings),
                   ),
                 ],
               ),

@@ -5,12 +5,13 @@ import 'package:fire_todo/features/search/presentation/widgets/search_textfield.
 import 'package:fire_todo/features/home/presentation/screens/tasks_section.dart';
 import 'package:fire_todo/features/home/presentation/widgets/to_do_badge.dart';
 import 'package:fire_todo/shared/dialogs/add_category.dart';
-import 'package:fire_todo/shared/dialogs/coming_soon.dart';
 import 'package:fire_todo/shared/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 import '../../../../shared/dialogs/confirm_delete_dialog.dart';
 import 'package:fire_todo/features/main/index.dart';
 import '../../../../shared/global/domain/entity/category_entity.dart';
+
+import 'package:fire_todo/core/router/router_paths.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -164,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // SETTINGS BUTTON
                   ActionButton(
                     icon: AppAssets.settings,
-                    onTap: () => showComingSoonDialog(context),
+                    onTap: () => context.push(RouterPaths.settings),
                   ),
                 ],
               ),

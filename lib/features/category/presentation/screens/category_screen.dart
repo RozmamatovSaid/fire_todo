@@ -9,11 +9,12 @@ import 'package:fire_todo/features/home/presentation/bloc/tasks/task_bloc.dart';
 import 'package:fire_todo/shared/global/domain/entity/category_entity.dart';
 import 'package:fire_todo/shared/dialogs/add_category.dart';
 import 'package:fire_todo/shared/dialogs/confirm_delete_dialog.dart';
-import 'package:fire_todo/shared/dialogs/coming_soon.dart';
 import 'package:fire_todo/shared/widgets/action_button.dart';
 import 'package:fire_todo/shared/widgets/global_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:fire_todo/core/router/router_paths.dart';
 
 mixin CategoryScreenMixin {
   Map<String, String> splitEmojiAndName(String name) {
@@ -148,7 +149,7 @@ class CategoryScreen extends StatelessWidget with CategoryScreenMixin {
                   ),
                   ActionButton(
                     icon: AppAssets.settings,
-                    onTap: () => showComingSoonDialog(context),
+                    onTap: () => context.push(RouterPaths.settings),
                   ),
                 ],
               ),
