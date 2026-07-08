@@ -10,6 +10,7 @@
 [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![BLoC](https://img.shields.io/badge/State-BLoC%2FCubit-blueviolet?style=for-the-badge)](https://bloclibrary.dev)
 [![Isar](https://img.shields.io/badge/Database-Isar-orange?style=for-the-badge)](https://isar.dev)
+[![Figma](https://img.shields.io/badge/Design-Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/GGbCazeecJ3T1FqRxox0CV/%F0%9F%93%83Easy-To_do--create-by-workline-?node-id=1-7929&p=f&t=JRzKdQfxInkmmkU8-0)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 </div>
