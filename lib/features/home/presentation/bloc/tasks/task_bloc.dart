@@ -20,6 +20,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final UpdateTaskUsecase updateTask;
 
   int? _lastLoadedCategoryId;
+  DateTime? _lastLoadedDate;
 
   TaskBloc({
     required this.addTask,
@@ -39,6 +40,12 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           (failure) => emit(TaskFailureState(message: failure.message)),
           (tasks) => emit(TasksLoadedState(taskEntity: tasks)),
         );
+      } else if (_lastLoadedDate != null) {
+        final result = await getByDate(_lastLoadedDate!);
+        result.fold(
+          (failure) => emit(TaskFailureState(message: failure.message)),
+          (tasks) => emit(TasksLoadedState(taskEntity: tasks)),
+        );
       } else {
         await _loadTasks(emit);
       }
@@ -54,6 +61,12 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           (failure) => emit(TaskFailureState(message: failure.message)),
           (tasks) => emit(TasksLoadedState(taskEntity: tasks)),
         );
+      } else if (_lastLoadedDate != null) {
+        final result = await getByDate(_lastLoadedDate!);
+        result.fold(
+          (failure) => emit(TaskFailureState(message: failure.message)),
+          (tasks) => emit(TasksLoadedState(taskEntity: tasks)),
+        );
       } else {
         await _loadTasks(emit);
       }
@@ -62,12 +75,14 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<GetAllTasksEvent>((event, emit) async {
       emit(const TaskLoadingState());
       _lastLoadedCategoryId = null;
+      _lastLoadedDate = null;
       await _loadTasks(emit);
     });
 
     on<GetTasksByCategoryEvent>((event, emit) async {
       emit(const TaskLoadingState());
       _lastLoadedCategoryId = event.categoryId;
+      _lastLoadedDate = null;
 
       final result = await getByCategoryId(event.categoryId);
       result.fold(
@@ -79,6 +94,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<GetTasksByDateEvent>((event, emit) async {
       emit(const TaskLoadingState());
       _lastLoadedCategoryId = null;
+      _lastLoadedDate = event.date;
 
       final result = await getByDate(event.date);
       result.fold(
@@ -90,6 +106,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<ClearTasksEvent>((event, emit) async {
       emit(const TasksLoadedState(taskEntity: []));
       _lastLoadedCategoryId = null;
+      _lastLoadedDate = null;
     });
 
     on<UpdateTaskEvent>((event, emit) async {
@@ -99,6 +116,12 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
       if (_lastLoadedCategoryId != null) {
         final result = await getByCategoryId(_lastLoadedCategoryId!);
+        result.fold(
+          (failure) => emit(TaskFailureState(message: failure.message)),
+          (tasks) => emit(TasksLoadedState(taskEntity: tasks)),
+        );
+      } else if (_lastLoadedDate != null) {
+        final result = await getByDate(_lastLoadedDate!);
         result.fold(
           (failure) => emit(TaskFailureState(message: failure.message)),
           (tasks) => emit(TasksLoadedState(taskEntity: tasks)),

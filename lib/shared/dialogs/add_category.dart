@@ -67,15 +67,20 @@ Future<String?> showAddCategoryDialog(
                                           onPressed: () {
                                             showEmojiPicker(
                                               context,
-                                              (emoji) => newEmoji = emoji,
+                                              (emoji) {
+                                                setState(() {
+                                                  newEmoji = emoji;
+                                                });
+                                              },
                                             );
                                           },
                                           icon: newEmoji != ''
                                               ? GlobalText(
                                                   newEmoji,
                                                   fontSize: 20,
+                                                  useTranslation: false,
                                                 )
-                                              : Icon(Icons.emoji_emotions),
+                                              : const Icon(Icons.emoji_emotions),
                                         ),
                                         hintText: AppStrings.enterCategoryName
                                             .tr(),

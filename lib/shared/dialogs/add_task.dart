@@ -124,39 +124,44 @@ Future<void> showAddTaskDialog(
                                     const SizedBox(height: 24),
 
                                     // Add Task Button
-                                    AppButton(
-                                      text: AppStrings.addNewTask.tr(),
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () {
-                                        if (controllerTitle.text.isNotEmpty) {
-                                          // TaskEntity yaratish
-                                          final newTask = TaskEntity(
-                                            title: controllerTitle.text,
-                                            description:
-                                                controllerDescription
-                                                    .text
-                                                    .isEmpty
-                                                ? null
-                                                : controllerDescription.text,
-                                            categoryId: selectedCategoryId,
-                                            priority:
-                                                TaskPriority.values[flagIndex],
-                                            check: false,
-                                            notify: notificationEnabled,
-                                            createdAt: DateTime.now(),
-                                            dueAt: selectedDateTime,
-                                          );
+                                    ListenableBuilder(
+                                      listenable: controllerTitle,
+                                      builder: (context, child) {
+                                        return AppButton(
+                                          text: AppStrings.addNewTask.tr(),
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () {
+                                            if (controllerTitle.text.isNotEmpty) {
+                                              // TaskEntity yaratish
+                                              final newTask = TaskEntity(
+                                                title: controllerTitle.text,
+                                                description:
+                                                    controllerDescription
+                                                        .text
+                                                        .isEmpty
+                                                    ? null
+                                                    : controllerDescription.text,
+                                                categoryId: selectedCategoryId,
+                                                priority:
+                                                    TaskPriority.values[flagIndex],
+                                                check: false,
+                                                notify: notificationEnabled,
+                                                createdAt: DateTime.now(),
+                                                dueAt: selectedDateTime,
+                                              );
 
-                                          // Bloc orqali task qo'shish
-                                          context.read<TaskBloc>().add(
-                                            AddTaskEvent(taskEntity: newTask),
-                                          );
+                                              // Bloc orqali task qo'shish
+                                              context.read<TaskBloc>().add(
+                                                AddTaskEvent(taskEntity: newTask),
+                                              );
 
-                                          // Dialog yopish
-                                          Navigator.of(dialogContext).pop();
-                                        }
+                                              // Dialog yopish
+                                              Navigator.of(dialogContext).pop();
+                                            }
+                                          },
+                                          isEnable: controllerTitle.text.isNotEmpty,
+                                        );
                                       },
-                                      isEnable: controllerTitle.text.isNotEmpty,
                                     ),
                                   ],
                                 );

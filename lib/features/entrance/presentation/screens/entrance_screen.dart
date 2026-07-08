@@ -88,14 +88,19 @@ class EntranceScreen extends StatelessWidget {
                       ),
 
                       const Spacer(),
-                      AppButton(
-                        text: AppStrings.getStartedButton.tr(),
-                        isEnable: controller.text.isNotEmpty,
-                        onPressed: () async {
-                          final nameService = NameStorageService();
-                          await nameService.saveName(controller.text);
-                          // ignore: use_build_context_synchronously
-                          context.go(RouterPaths.home);
+                      ListenableBuilder(
+                        listenable: controller,
+                        builder: (context, child) {
+                          return AppButton(
+                            text: AppStrings.getStartedButton.tr(),
+                            isEnable: controller.text.isNotEmpty,
+                            onPressed: () async {
+                              final nameService = NameStorageService();
+                              await nameService.saveName(controller.text);
+                              // ignore: use_build_context_synchronously
+                              context.go(RouterPaths.home);
+                            },
+                          );
                         },
                       ),
                       24.g,

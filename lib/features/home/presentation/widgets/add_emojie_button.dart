@@ -244,12 +244,12 @@ class _EmojiPickerBottomSheetState extends State<EmojiPickerBottomSheet>
               ),
             ),
           ),
-
-          ValueListenableBuilder(
+          ValueListenableBuilder<String?>(
             valueListenable: selectEmojiNotifier,
             builder: (context, selectEmoji, child) => AppButton(
               text: "${selectEmoji ?? ''}  ${AppStrings.add.tr()}",
-              padding: EdgeInsets.only(right: 16, left: 16, top: 5, bottom: 5),
+              padding: const EdgeInsets.only(right: 16, left: 16, top: 5, bottom: 5),
+              isEnable: selectEmoji != null,
               onPressed: () {
                 context.pop();
               },
