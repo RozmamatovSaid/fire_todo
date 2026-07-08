@@ -185,48 +185,66 @@ class CategoryScreen extends StatelessWidget with CategoryScreenMixin {
                     }
                     if (state is CategoryLoadedState) {
                       final categories = state.categories;
-                      return ListView.builder(
-                        itemCount: categories.length + 1,
+                      return ListView(
                         padding: const EdgeInsets.only(bottom: 24),
-                        itemBuilder: (context, index) {
-                          if (index == categories.length) {
-                            return GestureDetector(
-                              onTap: () => handleAddCategory(context),
-                              child: CustomPaint(
-                                painter: DashedBorderPainter(),
-                                child: Container(
-                                  height: 60,
-                                  alignment: Alignment.center,
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      GlobalText(
-                                        "+",
-                                        fontSize: 18,
-                                        color: AppColors.grey400,
-                                        fontWeight: FontWeight.bold,
-                                        useTranslation: false,
-                                      ),
-                                      SizedBox(width: 8),
-                                      GlobalText(
-                                        AppStrings.createNewCategory,
-                                        fontSize: 14,
-                                        color: AppColors.grey400,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ],
-                                  ),
+                        children: [
+                          ReorderableListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: categories.length,
+                            buildDefaultDragHandles: false,
+                            onReorderItem: (oldIndex, newIndex) {
+                              final list = List<CategoryEntity>.from(categories);
+                              final item = list.removeAt(oldIndex);
+                              list.insert(newIndex, item);
+                              context.read<CategoryBloc>().add(
+                                    ReorderCategoriesEvent(categories: list),
+                                  );
+                            },
+                            itemBuilder: (context, index) {
+                              final category = categories[index];
+                              return CategoryCard(
+                                key: ValueKey(category.id),
+                                category: category,
+                                index: index,
+                                onEdit: () =>
+                                    handleEditCategory(context, category),
+                                onDelete: () =>
+                                    handleDeleteCategory(context, category),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 12),
+                          GestureDetector(
+                            onTap: () => handleAddCategory(context),
+                            child: CustomPaint(
+                              painter: DashedBorderPainter(),
+                              child: Container(
+                                height: 60,
+                                alignment: Alignment.center,
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    GlobalText(
+                                      "+",
+                                      fontSize: 18,
+                                      color: AppColors.grey400,
+                                      fontWeight: FontWeight.bold,
+                                      useTranslation: false,
+                                    ),
+                                    SizedBox(width: 8),
+                                    GlobalText(
+                                      AppStrings.createNewCategory,
+                                      fontSize: 14,
+                                      color: AppColors.grey400,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ],
                                 ),
                               ),
-                            );
-                          }
-                          final category = categories[index];
-                          return CategoryCard(
-                            category: category,
-                            onEdit: () => handleEditCategory(context, category),
-                            onDelete: () => handleDeleteCategory(context, category),
-                          );
-                        },
+                            ),
+                          ),
+                        ],
                       );
                     }
                     return const SizedBox.shrink();
@@ -243,12 +261,14 @@ class CategoryScreen extends StatelessWidget with CategoryScreenMixin {
 
 class CategoryCard extends StatelessWidget {
   final CategoryEntity category;
+  final int index;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
   const CategoryCard({
-    super.key,
+    required super.key,
     required this.category,
+    required this.index,
     required this.onEdit,
     required this.onDelete,
   });
@@ -264,34 +284,37 @@ class CategoryCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: List.generate(3, (index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.5),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 3,
-                      height: 3,
-                      decoration: const BoxDecoration(
-                        color: AppColors.grey400,
-                        shape: BoxShape.circle,
+          ReorderableDragStartListener(
+            index: index,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(3, (index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 1.5),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 3,
+                        height: 3,
+                        decoration: const BoxDecoration(
+                          color: AppColors.grey400,
+                          shape: BoxShape.circle,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 3),
-                    Container(
-                      width: 3,
-                      height: 3,
-                      decoration: const BoxDecoration(
-                        color: AppColors.grey400,
-                        shape: BoxShape.circle,
+                      const SizedBox(width: 3),
+                      Container(
+                        width: 3,
+                        height: 3,
+                        decoration: const BoxDecoration(
+                          color: AppColors.grey400,
+                          shape: BoxShape.circle,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+                    ],
+                  ),
+                );
+              }),
+            ),
           ),
           const SizedBox(width: 14),
           Expanded(

@@ -31,7 +31,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     required this.updateTask,
   }) : super(const TaskInitialState()) {
     on<AddTaskEvent>((event, emit) async {
-      emit(const TaskLoadingState());
       await addTask(event.taskEntity);
 
       if (_lastLoadedCategoryId != null) {
@@ -52,7 +51,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
 
     on<DeleteTaskEvent>((event, emit) async {
-      emit(const TaskLoadingState());
       await deleteTask(event.taskId);
 
       if (_lastLoadedCategoryId != null) {
@@ -110,8 +108,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
 
     on<UpdateTaskEvent>((event, emit) async {
-      emit(const TaskLoadingState());
-
       await updateTask(event.taskEntity);
 
       if (_lastLoadedCategoryId != null) {
@@ -132,8 +128,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
 
     on<ReorderTasksEvent>((event, emit) async {
-      emit(const TaskLoadingState());
-
       for (final task in event.tasks) {
         await updateTask(task);
       }

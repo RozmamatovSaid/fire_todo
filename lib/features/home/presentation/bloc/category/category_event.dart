@@ -37,3 +37,12 @@ class EditCategoryEvent extends CategoryEvent {
   @override
   List<Object?> get props => [category];
 }
+
+class ReorderCategoriesEvent extends CategoryEvent {
+  final List<CategoryEntity> categories;
+
+  const ReorderCategoriesEvent({required this.categories});
+
+  @override
+  List<Object?> get props => [categories];
+}
